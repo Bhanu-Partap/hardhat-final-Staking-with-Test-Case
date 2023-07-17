@@ -15,25 +15,13 @@ describe("Staking Test Cases", async () => {
     let _amount = 100;
     console.log(owner.address);
     console.log(addr2.address);
-    const value = await erc20.approve(staking.address, _amount,{from : owner.address});
+    console.log(staking.address);
+    const val = await erc20.approve(staking.address, _amount,{from : owner.address});
     const allowance = await erc20.allowance(owner.address, staking.address);
-    expect(await value).to.equal(allowance.toNumber());
+    console.log(allowance);
+    expect(allowance.toNumber()).to.equal(_amount);
   });
-
-  // it("Checking the allowance", async () => { 
-  //   const [owner, addr, addr2] = await hre.ethers.getSigners();
-  //   let _amount = 100;
-  //   const value = await erc20.approve(addr2.address, _amount,{from : owner.address});
-  //   expect(await erc20.allowance(owner.address, staking.address)).to.equal(_amount);
-  // });
-
   
-  // it("Should minting the token",async()=>{
-  //   const [owner, addr, addr2] = await hre.ethers.getSigners();
-  //   const _amount = 100;
-  //   const minttoken= erc20.mint(_amount);
-  //   expect(await erc20.balanceOf(owner.address).to.equal(minttoken))
-  // })
-
+ 
 
 });

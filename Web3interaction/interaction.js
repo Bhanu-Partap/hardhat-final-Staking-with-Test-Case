@@ -479,6 +479,12 @@ const contract =  new web3.eth.Contract(erc20abi,ercAddress);
 
 //ERC - 20 Functions calling 
 
-contract.methods.mint(100).send({from :"0xBd07FD0B81Cf5e76E5fAC50884066FA9549A6738", gas :100000})
-// contract.methods.balanceOf(console.log("0x039C5502591Df9b6D6B925826D6bd3DA0D982306"))
-// contract.methods.approve("0xf8e81D47203A594245E36C48e151709F0C19fBe8", 100).send({from :"0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2", gas :100000})
+const contractfunctions =(async()=>{
+   await contract.methods.mint(100).send({from :"0xBd07FD0B81Cf5e76E5fAC50884066FA9549A6738", gas :300000});
+  const hel= contract.methods.balanceOf("0xBd07FD0B81Cf5e76E5fAC50884066FA9549A6738")
+  console.log(hel);
+    // contract.methods.approve("0x20775d300BdE943Ac260995E977fb915fB01f399", 100).send({from :"0x20775d300BdE943Ac260995E977fb915fB01f399", gas :100000})
+})
+
+contractfunctions();
+

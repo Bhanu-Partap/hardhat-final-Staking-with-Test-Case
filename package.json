@@ -17,7 +17,7 @@
     "hardhat": "^2.16.1"
   },
   "dependencies": {
-    "web3": "^4.0.3"
+    "web3": "^4.0.1"
   },
   "type": "module"
 }

@@ -21,7 +21,24 @@ describe("Staking Test Cases", async () => {
     console.log(allowance);
     expect(allowance.toNumber()).to.equal(_amount);
   });
+
+  it("Should transfering the token",async()=>{
+    const [owner, addr, addr2] = await hre.ethers.getSigners();
+    const _amount=100 ;
+    const tokentransfer = await erc20.transfer(staking.address, _amount);
+    expect(await erc20.balanceOf(staking.address)).to.equal(_amount);
+
+  })
   
+  it("Should staking the fixed amount",async()=>{
+    const [owner, addr, addr2] = await hre.ethers.getSigners();
+    const _amount = 100;
+    const type = "fixed";
+    const duration = 100;
+    const isFixed = true;
+    const stake = staking.staking(_amount, type, duration, isFixed, {from :addr.address})
+    expect(await stake ).to.equal(staking.Stake_details(addr.address))
+  })
  
 
 });

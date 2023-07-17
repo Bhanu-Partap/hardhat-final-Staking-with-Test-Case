@@ -2,6 +2,7 @@ const { expect } = require("chai");
 const ethers = require("ethers");
 
 describe("Staking Test Cases", async () => {
+
   let erc20, ERC20, staking, Staking;
   beforeEach(async () => {
     ERC20 = await hre.ethers.getContractFactory("ERC20Basic");
@@ -10,6 +11,7 @@ describe("Staking Test Cases", async () => {
     staking = await  Staking.deploy(erc20.address);
   });
 
+    //=================ERC-20 TEST CASE==================
   it("Should it be approving the contract", async () => { 
     const [owner, addr, addr2] = await hre.ethers.getSigners();
     let _amount = 100;
@@ -29,6 +31,13 @@ describe("Staking Test Cases", async () => {
     expect(await erc20.balanceOf(staking.address)).to.equal(_amount);
 
   })
+
+  // it("Should returning the right contract address",async()=>{
+
+  // })
+
+
+
   
   it("Should staking the fixed amount",async()=>{
     const [owner, addr, addr2] = await hre.ethers.getSigners();
@@ -36,7 +45,10 @@ describe("Staking Test Cases", async () => {
     const type = "fixed";
     const duration = 100;
     const isFixed = true;
-    const stake = staking.staking(_amount, type, duration, isFixed, {from :addr.address})
+    const minttoken = await erc20.connect(addr.address).mint(_amount);
+    console.log(minttoken);
+    const tokentransfer = await erc20.transfer(addr.address, _amount);
+    const stake = staking.connect(addr.address).staking(_amount, type, duration, isFixed)
     expect(await stake ).to.equal(staking.Stake_details(addr.address))
   })
  

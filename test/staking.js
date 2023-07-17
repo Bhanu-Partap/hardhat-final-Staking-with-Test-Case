@@ -8,8 +8,6 @@ describe("Staking Test Cases", async () => {
     erc20 = await  ERC20.deploy();
     Staking = await hre.ethers.getContractFactory("Staking_Token");
     staking = await  Staking.deploy(erc20.address);
-    
-
   });
 
   it("Should it be approving the contract", async () => { 
@@ -18,7 +16,6 @@ describe("Staking Test Cases", async () => {
     console.log(owner.address);
     console.log(addr2.address);
     const value = await erc20.approve(staking.address, _amount,{from : owner.address});
-    // expect(await value).to.equal(staking.address, 100);
     const allowance = await erc20.allowance(owner.address, staking.address);
     expect(await value).to.equal(allowance.toNumber());
   });

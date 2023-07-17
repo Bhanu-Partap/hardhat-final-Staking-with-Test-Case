@@ -26,7 +26,6 @@ describe("Staking Test Cases", async () => {
   });
 
   it("Should transfering the token", async () => {
-    const [owner, addr, addr2] = await hre.ethers.getSigners();
     const _amount = 100;
     const tokentransfer = await erc20.transfer(staking.address, _amount);
     expect(await erc20.balanceOf(staking.address)).to.equal(_amount);
@@ -35,11 +34,11 @@ describe("Staking Test Cases", async () => {
   it("Should returning the right contract address", async () => {
     // const [owner, addr, addr2] = await hre.ethers.getSigners();
     const contractaddress = await erc20.getcontractaddress();
-    expect(contractaddress).to.equal(erc20.address);
+    expect(await contractaddress).to.equal(erc20.address);
   });
 
   it("Should staking the fixed amount", async () => {
-    const [owner, addr] = await hre.ethers.getSigners();
+    const [ addr] = await hre.ethers.getSigners();
     const _amount = 100;
     const type = "fixed";
     const duration = 100;
@@ -47,6 +46,20 @@ describe("Staking Test Cases", async () => {
     const minttoken = await erc20.connect(addr.address).mint(_amount);
     console.log(minttoken);
     const stake = staking.staking(_amount, type, duration, isFixed, {from : addr.address});
+    expect(await stake).to.equal(staking.Stake_details(addr.address));
+  });
+
+  it("Should staking the unfixed amount", async () => {
+    const [ addr] = await hre.ethers.getSigners();
+    const _amount = 100;
+    const type = "unfixed";
+    const duration = 0;
+    const isFixed = false;
+    const minttoken = await erc20.connect(addr.address).mint(_amount);
+    console.log(minttoken);
+    const stake = staking.staking(_amount, type, duration, isFixed, {from : addr.address});
+    console.log(stake);
+    console.log(addr.address);
     expect(await stake).to.equal(staking.Stake_details(addr.address));
   });
 });

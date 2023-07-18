@@ -2,7 +2,8 @@
 // import {Stakingabi} from "./staking.json" assert{type:"json"};
 
 
-import { Web3 } from "web3";
+// const Web3 = require("web3")
+import Web3 from "web3";
 const web3 = new Web3("http://127.0.0.1:7545");
 
 const erc20abi = [
@@ -216,6 +217,11 @@ const erc20abi = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
 				"name": "receiver",
 				"type": "address"
 			},
@@ -268,47 +274,6 @@ const erc20abi = [
 ] ;
 const stakingabi = [
 	{
-		"inputs": [],
-		"name": "getcontractaddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_type",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_duration",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "_isFixed",
-				"type": "bool"
-			}
-		],
-		"name": "staking",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "contract ERC20Basic",
@@ -343,44 +308,6 @@ const stakingabi = [
 		],
 		"name": "tokensStaked",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "unstaking",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "claimedRewards",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -458,6 +385,122 @@ const stakingabi = [
 				"type": "address"
 			}
 		],
+		"name": "claimedRewards",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getcontractaddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getstaking_details",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "stake_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "stake_type",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "stake_time",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "starting_stake_time",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isFixed",
+						"type": "bool"
+					},
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "isClaimed",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct Staking_Token.Stake",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_type",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_duration",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isFixed",
+				"type": "bool"
+			}
+		],
+		"name": "staking",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
 		"name": "unclaimedRewards",
 		"outputs": [
 			{
@@ -468,23 +511,46 @@ const stakingabi = [
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "unstaking",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ];
 
-const ercAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
-const stakingAddress = "0xf8e81D47203A594245E36C48e151709F0C19fBe8";
+const ercAddress = "0xF046297d212B49Eb7F234D13A901af37361c59B2";
+const stakingAddress = "0x8eBE195c1C979d8b0D8cfd3cD5BFeC9EA171a9b8";
 
 const contract =  new web3.eth.Contract(erc20abi,ercAddress);
 
 
 //ERC - 20 Functions calling 
 
-const contractfunctions =(async()=>{
-   await contract.methods.mint(100).send({from :"0xBd07FD0B81Cf5e76E5fAC50884066FA9549A6738", gas :300000});
-  const hel= contract.methods.balanceOf("0xBd07FD0B81Cf5e76E5fAC50884066FA9549A6738")
-  console.log(hel);
-    // contract.methods.approve("0x20775d300BdE943Ac260995E977fb915fB01f399", 100).send({from :"0x20775d300BdE943Ac260995E977fb915fB01f399", gas :100000})
-})
+const cont=(async()=>{
+//==============minting the token at owner address=======================
+	// await contract.methods.mint(100).send({from :"0xe8A6ca20c6578426e836d471c0Cf63f68b62736d", gas :300000});
 
-contractfunctions();
+// ================transferring the token from 1 address to another=====================
+	await contract.methods.mint(100).send({from :"0xe8A6ca20c6578426e836d471c0Cf63f68b62736d", gas :300000});
+	  // contract.methods.approve("0x20775d300BdE943Ac260995E977fb915fB01f399", 100).send({from :"0x20775d300BdE943Ac260995E977fb915fB01f399", gas :100000})
+  
+})
+ 
+cont()
+
 

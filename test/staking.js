@@ -1,7 +1,11 @@
 const { expect } = require("chai");
-const {ethers} = require("hardhat");
+const { ethers } = require("hardhat");
 
 describe("Staking Test Cases", async () => {
+  const _amount = 100;
+  const type = "fixed";
+  const duration = 100;
+  const isFixed = true;
   let erc20, ERC20, staking, Staking;
   beforeEach(async () => {
     ERC20 = await ethers.getContractFactory("ERC20Basic");
@@ -9,7 +13,6 @@ describe("Staking Test Cases", async () => {
     Staking = await ethers.getContractFactory("Staking_Token");
     staking = await Staking.deploy(erc20.address);
     [owner, addr, addr2] = await ethers.getSigners();
-
   });
 
   //=================ERC-20 TEST CASE==================
@@ -26,58 +29,52 @@ describe("Staking Test Cases", async () => {
     expect(allowance.toNumber()).to.equal(_amount);
   });
 
-
-
   it("Should transfering the token", async () => {
     const _amount = 100;
     const tokentransfer = await erc20.transfer(staking.address, _amount);
     expect(await erc20.balanceOf(staking.address)).to.equal(_amount);
   });
 
-
-
   it("Should returning the right contract address", async () => {
     const contractaddress = await erc20.getcontractaddress();
     const add = await contractaddress.to;
-    // console.log(add);
-    // console.log(erc20.address);
     expect(add).to.equal(erc20.address);
   });
 
+  it("Should checking the amount of staker", async () => {
+    const signers = await ethers.getSigners();
+    const _amount = 100;
+    const val = await erc20.connect(signers[1]).mint(_amount);
+    const balance = await erc20.balanceOf(addr.address);
+    expect(balance).to.equal(_amount);
+  });
+});
 
-
- 
+it("Should staking the fixed amount", async () => {
+  await erc20.transfer(addr.address,_amount)
+  const stake = await staking.connect(addr.address).staking(_amount, type, duration, isFixed);
+  console.log(stake);
+  const stakingDetails = await staking.stake_details(addr.address)
+  expect(stakingDetails.stake_amount).to.equal(_amount);
+  expect(stakingDetails.stake_type).to.equal(type);
+  expect(stakingDetails.stake_time).to.equal(duration);
+  expect(stakingDetails.stake_time).to.equal(duration);
+  expect(stakingDetails.isFixed).to.equal(isFixed);
 });
 
 
- // it("Should staking the fixed amount", async () => {
-  //   // const _amount = 100;
-  //   // const type = "fixed";
-  //   // const duration = 100;
-  //   // const isFixed = true;
-  //   const addressh = await addr.address;
-  //   console.log(addressh)
-  //   const minttoken = await erc20.transfer("0Bd07FD0B81Cf5e76E5fAC50884066FA9549A6738",100,{from : "0x20775d300BdE943Ac260995E977fb915fB01f399", gas: 100000});
-  //   console.log(minttoken);
-  //   const stake = await staking.staking(100, "fixed", 100, true, {from : addressh.address});
-  //   console.log(stake);
-  //   expect(await stake).to.equal(staking.Stake_details(addr.address));
-  // });
 
-
-
-
-  // it("Should staking the unfixed amount", async () => {
-  //   // const [ addr] = await hre.ethers.getSigners();
-  //   const _amount = 100;
-  //   const type = "unfixed";
-  //   const duration = 0;
-  //   const isFixed = false;
-  //   const minttoken = await erc20.connect(addr.address).mint(_amount);
-  //   // expect(await erc20.balanceOf(addr.address)).to.equal(_amount);
-  //   console.log(minttoken);
-  //   const stake = staking.staking(_amount, type, duration, isFixed, {from : addr.address});
-  //   console.log(stake);
-  //   console.log(addr.address);
-  //    expect( stake).to.equal(staking.Stake_details(addr.getAddress()));
-  // });
+// it("Should staking the unfixed amount", async () => {
+//   // const [ addr] = await hre.ethers.getSigners();
+//   const _amount = 100;
+//   const type = "unfixed";
+//   const duration = 0;
+//   const isFixed = false;
+//   const minttoken = await erc20.connect(addr.address).mint(_amount);
+//   // expect(await erc20.balanceOf(addr.address)).to.equal(_amount);
+//   console.log(minttoken);
+//   const stake = staking.staking(_amount, type, duration, isFixed, {from : addr.address});
+//   console.log(stake);
+//   console.log(addr.address);
+//    expect( stake).to.equal(staking.Stake_details(addr.getAddress()));
+// });

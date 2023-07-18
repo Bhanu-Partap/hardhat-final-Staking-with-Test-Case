@@ -38,7 +38,7 @@ contract Staking_Token {
 
 
     function staking(uint256 _amount,string memory _type,uint256 _duration, bool _isFixed) public {
-        require(Token.balanceOf(msg.sender) >= _amount, "Insufficient Balance");
+        require(Token.balanceOf(msg.sender) > _amount, "Insufficient Balance");
         if ( keccak256(abi.encodePacked(_type)) == keccak256(abi.encodePacked("fixed")) ) {
             require( _amount > 0," Stake can not be 0 , Enter some amount of tokens");
             Stake_details[msg.sender].stake_amount = _amount;

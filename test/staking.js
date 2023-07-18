@@ -7,6 +7,7 @@ describe("Staking Test Cases", async () => {
   const duration = 100;
   const isFixed = true;
   let erc20, ERC20, staking, Staking;
+
   beforeEach(async () => {
     ERC20 = await ethers.getContractFactory("ERC20Basic");
     erc20 = await ERC20.deploy();
@@ -25,7 +26,6 @@ describe("Staking Test Cases", async () => {
       from: owner.address,
     });
     const allowance = await erc20.allowance(owner.address, staking.address);
-    // console.log(allowance);
     expect(allowance.toNumber()).to.equal(_amount);
   });
 
@@ -48,10 +48,10 @@ describe("Staking Test Cases", async () => {
     const balance = await erc20.balanceOf(addr.address);
     expect(balance).to.equal(_amount);
   });
-});
+
 
 it("Should staking the fixed amount", async () => {
-  await erc20.transfer(addr.address,_amount)
+  await erc20.connect(owner.address).transfer(addr.address,_amount);
   const stake = await staking.connect(addr.address).staking(_amount, type, duration, isFixed);
   console.log(stake);
   const stakingDetails = await staking.stake_details(addr.address)
@@ -61,7 +61,7 @@ it("Should staking the fixed amount", async () => {
   expect(stakingDetails.stake_time).to.equal(duration);
   expect(stakingDetails.isFixed).to.equal(isFixed);
 });
-
+});
 
 
 // it("Should staking the unfixed amount", async () => {

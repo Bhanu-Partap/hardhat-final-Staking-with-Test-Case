@@ -147,11 +147,11 @@ function unclaimedRewards(address _address) public view  returns (uint256) {
         }
     }
 }
-    function getstaking_details(address _address) public returns (Stake memory) {
+    function getstaking_details(address _address) public view returns (Stake memory) {
         return Stake_details[_address];
     }
 
-    function getcontractaddress() public returns (address) {
+    function getcontractaddress() public view returns (address) {
         return address(this);
     }
 }

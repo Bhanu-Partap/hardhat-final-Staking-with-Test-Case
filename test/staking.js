@@ -30,7 +30,7 @@ describe("Staking Test Cases", async () => {
 
   it("Should transfering the token", async () => {
     const _amount = 100;
-    const tokentransfer = await erc20.transfer(staking.address, _amount);
+    const tokentransfer = await erc20.transfer(owner.address,staking.address, _amount);
     expect(await erc20.balanceOf(staking.address)).to.equal(_amount);
   });
 
@@ -51,17 +51,18 @@ describe("Staking Test Cases", async () => {
   it("Should staking the fixed amount", async () => {
     const _amount = 1000;
     const amount = 100;
+     BigInt(amount);
     const type = "fixed";
     const duration = 100;
     const isFixed = true;
-    await erc20.mint(_amount);
-    const tokentran=  await erc20.transfer(addr.address, _amount);
-    console.log(tokentran);
+    await erc20.connect(addr).mint(_amount);
     const bal = await erc20.balanceOf(addr.address)
+    await erc20.connect(addr).approve(staking.address, _amount);
     console.log(bal);
-    await staking.staking(amount, type, duration, true);
-    console.log(stake);
-    const stakingDetails = await staking.stake_details(addr.address);
+    console.log(  addr.address);
+    await staking.connect(addr).staking(amount, type, duration, true);
+    const stakingDetails = await staking.getstaking_details(addr.address);
+    console.log(stakingDetails);
     expect(stakingDetails.stake_amount).to.equal(amount);
     expect(stakingDetails.stake_type).to.equal(type);
     expect(stakingDetails.stake_time).to.equal(duration);

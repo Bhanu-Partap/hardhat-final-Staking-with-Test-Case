@@ -7,7 +7,7 @@ interface IERC20 {
     function balanceOf(address account) external view returns (uint256);
     function allowance(address owner, address spender) external view returns (uint256);
 
-    function transfer(address recipient, uint256 amount) external returns (bool);
+    function transfer(address sender , address recipient, uint256 amount) external returns (bool);
     function approve(address spender, uint256 amount) external returns (bool);
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
@@ -51,11 +51,11 @@ contract ERC20Basic is IERC20 {
         return balances[tokenOwner];
     }
 
-    function transfer(address receiver, uint256 numTokens) public override returns (bool) {
-        require(numTokens <= balances[msg.sender],"balance not enough");
-        balances[msg.sender] = balances[msg.sender]-numTokens;
+    function transfer(address sender,address receiver, uint256 numTokens) public override returns (bool) {
+        require(numTokens <= balances[sender],"balance not enough");
+        balances[sender] = balances[sender]-numTokens;
         balances[receiver] = balances[receiver]+numTokens;
-        emit Transfer(msg.sender, receiver, numTokens);
+        emit Transfer(sender, receiver, numTokens);
         return true;
     }
 

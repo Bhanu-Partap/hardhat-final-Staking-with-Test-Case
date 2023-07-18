@@ -38,7 +38,7 @@ contract Staking_Token {
 
 
     function staking(uint256 _amount,string memory _type,uint256 _duration, bool _isFixed) public {
-        require(Token.balanceOf(msg.sender) > _amount, "Insufficient Balance");
+        require(Token.balanceOf(msg.sender) >= _amount, "Insufficient Balance");
         if ( keccak256(abi.encodePacked(_type)) == keccak256(abi.encodePacked("fixed")) ) {
             require( _amount > 0," Stake can not be 0 , Enter some amount of tokens");
             Stake_details[msg.sender].stake_amount = _amount;
@@ -48,7 +48,7 @@ contract Staking_Token {
             Stake_details[msg.sender].owner =msg.sender;
             Stake_details[msg.sender].isClaimed =false;
             Stake_details[msg.sender].starting_stake_time = block.timestamp;
-            Token.transfer( address(this), _amount);
+            Token.transfer( msg.sender,address(this), _amount);
             emit tokensStaked(msg.sender, _amount, block.timestamp);
         } 
         else if (keccak256(abi.encodePacked(_type)) == keccak256(abi.encodePacked("unfixed")) ) {
@@ -58,7 +58,7 @@ contract Staking_Token {
             Stake_details[msg.sender].owner =msg.sender;
             Stake_details[msg.sender].isClaimed =false;
             Stake_details[msg.sender].starting_stake_time = block.timestamp;
-            Token.transfer( address(this), _amount);
+            Token.transfer( msg.sender,address(this), _amount);
             emit tokensStaked(msg.sender, _amount, block.timestamp);
         }
     }
@@ -74,7 +74,7 @@ contract Staking_Token {
                 Interest =(Stake_details[_address].stake_amount *fixedinterest_rate ) /100;
                 totalIntrestAmount =Stake_details[_address].stake_amount + Interest;
                 // console.log(totalIntrestAmount);
-                Token.transfer(_address, totalIntrestAmount);
+                Token.transfer(msg.sender,_address, totalIntrestAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return totalIntrestAmount;
@@ -91,7 +91,7 @@ contract Staking_Token {
                 // console.log(totalIntrestAmount);
                 finalAmount =totalIntrestAmount +Stake_details[_address].stake_amount;
                 // console.log(finalAmount);
-                Token.transfer(_address, finalAmount);
+                Token.transfer(msg.sender,_address, finalAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return finalAmount;
@@ -103,7 +103,7 @@ contract Staking_Token {
                 // console.log(Interest);
                 totalIntrestAmount =Stake_details[_address].stake_amount + Interest;
                 // console.log(totalIntrestAmount);
-                Token.transfer(_address, totalIntrestAmount);
+                Token.transfer(msg.sender,_address, totalIntrestAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return totalIntrestAmount;
@@ -147,7 +147,9 @@ function unclaimedRewards(address _address) public view  returns (uint256) {
         }
     }
 }
-
+    function getstaking_details(address _address) public returns (Stake memory) {
+        return Stake_details[_address];
+    }
 
     function getcontractaddress() public returns (address) {
         return address(this);

@@ -58,11 +58,11 @@ describe("Staking Test Cases", async () => {
     await erc20.connect(addr).mint(_amount);
     const bal = await erc20.balanceOf(addr.address)
     await erc20.connect(addr).approve(staking.address, _amount);
-    console.log(bal);
-    console.log(  addr.address);
+    // console.log(bal);
+    // console.log(addr.address);
     await staking.connect(addr).staking(amount, type, duration, true);
     const stakingDetails = await staking.getstaking_details(addr.address);
-    console.log(stakingDetails);
+    // console.log(stakingDetails);
     expect(stakingDetails.stake_amount).to.equal(amount);
     expect(stakingDetails.stake_type).to.equal(type);
     expect(stakingDetails.stake_time).to.equal(duration);

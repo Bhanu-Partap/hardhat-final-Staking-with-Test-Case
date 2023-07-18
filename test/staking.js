@@ -51,7 +51,7 @@ describe("Staking Test Cases", async () => {
 
 
 it("Should staking the fixed amount", async () => {
-  await erc20.connect(owner.address).transfer(addr.address,_amount);
+  await erc20.transfer(addr.address,_amount);
   const stake = await staking.connect(addr.address).staking(_amount, type, duration, isFixed);
   console.log(stake);
   const stakingDetails = await staking.stake_details(addr.address)

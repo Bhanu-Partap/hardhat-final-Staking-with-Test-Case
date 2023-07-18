@@ -52,7 +52,7 @@ contract ERC20Basic is IERC20 {
     }
 
     function transfer(address receiver, uint256 numTokens) public override returns (bool) {
-        require(numTokens <= balances[msg.sender]);
+        require(numTokens <= balances[msg.sender],"balance not enough");
         balances[msg.sender] = balances[msg.sender]-numTokens;
         balances[receiver] = balances[receiver]+numTokens;
         emit Transfer(msg.sender, receiver, numTokens);

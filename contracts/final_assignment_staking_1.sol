@@ -48,7 +48,7 @@ contract Staking_Token {
             Stake_details[msg.sender].owner =msg.sender;
             Stake_details[msg.sender].isClaimed =false;
             Stake_details[msg.sender].starting_stake_time = block.timestamp;
-            Token.transferFrom(msg.sender, address(this), _amount);
+            Token.transfer( address(this), _amount);
             emit tokensStaked(msg.sender, _amount, block.timestamp);
         } 
         else if (keccak256(abi.encodePacked(_type)) == keccak256(abi.encodePacked("unfixed")) ) {
@@ -58,7 +58,7 @@ contract Staking_Token {
             Stake_details[msg.sender].owner =msg.sender;
             Stake_details[msg.sender].isClaimed =false;
             Stake_details[msg.sender].starting_stake_time = block.timestamp;
-            Token.transferFrom(msg.sender, address(this), _amount);
+            Token.transfer( address(this), _amount);
             emit tokensStaked(msg.sender, _amount, block.timestamp);
         }
     }

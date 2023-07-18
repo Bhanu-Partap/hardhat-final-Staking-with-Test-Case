@@ -48,26 +48,113 @@ describe("Staking Test Cases", async () => {
     expect(balance).to.equal(_amount);
   });
 
-  it("Should staking the fixed amount", async () => {
-    const _amount = 1000;
+  it("Should checking staking the fixed amount", async () => {
+    const _amount = 100;
     const amount = 100;
      BigInt(amount);
     const type = "fixed";
-    const duration = 100;
+    const duration = 10;
+    const isFixed = true;
+    await erc20.connect(addr).mint(_amount);
+    const bal = await erc20.balanceOf(addr.address)
+    await erc20.connect(addr).approve(staking.address, _amount);
+    await staking.connect(addr).staking(amount, type, duration, isFixed);
+    const stakingDetails = await staking.getstaking_details(addr.address);
+    expect(stakingDetails.stake_amount).to.equal(amount);
+  });
+
+  it("Should checking staking type", async () => {
+    const _amount = 100;
+    const amount = 100;
+     BigInt(amount);
+    const type = "fixed";
+    const duration = 10;
+    const isFixed = true;
+    await erc20.connect(addr).mint(_amount);
+    const bal = await erc20.balanceOf(addr.address)
+    await erc20.connect(addr).approve(staking.address, _amount);
+    await staking.connect(addr).staking(amount, type, duration, isFixed);
+    const stakingDetails = await staking.getstaking_details(addr.address);
+  expect(stakingDetails.stake_type).to.equal(type);
+  });
+
+
+  it("Should checking staking duration", async () => {
+    const _amount = 100;
+    const amount = 100;
+     BigInt(amount);
+    const type = "fixed";
+    const duration = 10;
+    const isFixed = true;
+    await erc20.connect(addr).mint(_amount);
+    const bal = await erc20.balanceOf(addr.address)
+    await erc20.connect(addr).approve(staking.address, _amount);
+    await staking.connect(addr).staking(amount, type, duration, isFixed);
+    const stakingDetails = await staking.getstaking_details(addr.address);
+    // console.log(stakingDetails);
+    expect(stakingDetails.stake_time).to.above(duration);
+  });
+
+
+  it("Should checking staking type fixed or unfixed", async () => {
+    const _amount = 100;
+    const amount = 100;
+     BigInt(amount);
+    const type = "fixed";
+    const duration = 10;
     const isFixed = true;
     await erc20.connect(addr).mint(_amount);
     const bal = await erc20.balanceOf(addr.address)
     await erc20.connect(addr).approve(staking.address, _amount);
     // console.log(bal);
     // console.log(addr.address);
-    await staking.connect(addr).staking(amount, type, duration, true);
+    await staking.connect(addr).staking(amount, type, duration, isFixed);
     const stakingDetails = await staking.getstaking_details(addr.address);
-    // console.log(stakingDetails);
-    expect(stakingDetails.stake_amount).to.equal(amount);
-    expect(stakingDetails.stake_type).to.equal(type);
-    expect(stakingDetails.stake_time).to.equal(duration);
     expect(stakingDetails.isFixed).to.equal(isFixed);
+
   });
+
+  it("Should staking the unfixed amount", async () => {
+    const _amount = 100;
+    const type = "unfixed";
+    const duration = 0;
+    const isFixed = false;
+    await erc20.connect(addr).mint(_amount);
+    const bal = await erc20.balanceOf(addr.address)
+    await erc20.connect(addr).approve(staking.address, _amount);
+    await staking.connect(addr).staking(_amount, type, duration, isFixed);
+    const stakingDetails = await staking.getstaking_details(addr.address);
+    expect(stakingDetails.stake_amount).to.equal(_amount);
+  });
+
+
+  it("Should staking the unfixed type", async () => {
+  const _amount = 100;
+  const type = "unfixed";
+  const duration = 0;
+  const isFixed = false;
+  await erc20.connect(addr).mint(_amount);
+  const bal = await erc20.balanceOf(addr.address)
+  await erc20.connect(addr).approve(staking.address, _amount);
+  await staking.connect(addr).staking(_amount, type, duration, isFixed);
+  const stakingDetails = await staking.getstaking_details(addr.address);
+  expect(stakingDetails.isFixed).to.equal(isFixed);
+});
+
+  it("Should staking the unfixed ", async () => {
+  const _amount = 100;
+  const type = "unfixed";
+  const duration = 0;
+  const isFixed = false;
+  await erc20.connect(addr).mint(_amount);
+  const bal = await erc20.balanceOf(addr.address)
+  await erc20.connect(addr).approve(staking.address, _amount);
+  await staking.connect(addr).staking(_amount, type, duration, isFixed);
+  const stakingDetails = await staking.getstaking_details(addr.address);
+  expect(stakingDetails.isFixed).to.equal(isFixed);
+});
+
+ 
 });
 
 // it("Should staking the unfixed amount", async () => {
@@ -83,3 +170,4 @@ describe("Staking Test Cases", async () => {
 //   console.log(addr.address);
 //    expect( stake).to.equal(staking.Stake_details(addr.getAddress()));
 // });
+

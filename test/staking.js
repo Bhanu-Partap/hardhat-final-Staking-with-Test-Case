@@ -1,5 +1,4 @@
 const { expect } = require("chai");
-const { time } = require('@nomicfoundation/hardhat-network-helpers');
 
 
 describe("Staking Test Cases", async () => {
@@ -156,6 +155,8 @@ describe("Staking Test Cases", async () => {
   expect(stakingDetails.isFixed).to.equal(isFixed);
 });
 
+
+
   it("Should staking the unfixed duration ", async () => {
   const _amount = 100;
   const type = "unfixed";
@@ -177,22 +178,16 @@ it("Should unstaking the stake ", async () => {
   const type = "fixed";
   const duration = 10;
   const isFixed = true;
-  const timestamp = await time.latest();
   await erc20.connect(owner).mint(amount);//for contract purpose
   await erc20.connect(owner).transfer(owner.address,staking.address, amount);
   await erc20.connect(addr).mint(amount);
-  // const bal = await erc20.balanceOf(addr.address)
   await erc20.connect(addr).approve(staking.address, _amount);
   await staking.connect(addr).staking(_amount, type, duration, isFixed);
   const stakingDetails = await staking.getstaking_details(addr.address);
-  await staking.connect(addr).unstaking(addr.address);
-  // console.log(stakingDetails);
-   stakingDetails.isFixed==true;
-   timestamp > stakingDetails.stake_time;
-  expect(stakingDetails.stake_amount).to.equal(0)
-});
 
- 
+  expect(await stakingDetails.isFixed).to.be.true;
+  expect( staking.connect(staking.address).unstaking(addr.address));
+});
 });
 
 

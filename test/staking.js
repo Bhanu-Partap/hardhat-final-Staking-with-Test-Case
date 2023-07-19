@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+const { time } = require('@nomicfoundation/hardhat-network-helpers');
 
 
 describe("Staking Test Cases", async () => {
@@ -195,8 +196,10 @@ it("Should unstaking the fixed after time stake ", async () => {
   const _amount = 100;
   const amount = 1000;
   const type = "fixed";
-  const duration = 100;
+  const duration =time.latest() + 100;
+  const convertduration = duration.toNumber()
   const isFixed = true;
+  const fixed_Interest = 6;
   await erc20.connect(owner).mint(amount);//for contract purpose
   await erc20.connect(owner).transfer(owner.address,staking.address, amount);
   await erc20.connect(addr).mint(amount);
@@ -205,6 +208,7 @@ it("Should unstaking the fixed after time stake ", async () => {
   const stakingDetails = await staking.getstaking_details(addr.address);
 
   expect(await stakingDetails.isFixed).to.be.true;
+  expect(await stakingDetails.stake_time).to.be.greaterThan(convertduration)
   expect( staking.connect(staking.address).unstaking(addr.address));
 });
 

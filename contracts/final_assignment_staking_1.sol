@@ -69,7 +69,7 @@ contract Staking_Token {
             if (block.timestamp > Stake_details[msg.sender].stake_time ) {
                 Interest =(Stake_details[_address].stake_amount *fixedinterest_rate ) /100;
                 totalIntrestAmount =Stake_details[_address].stake_amount + Interest;
-                Token.transfer(msg.sender,_address, totalIntrestAmount);
+                Token.transfer(address(this),_address, totalIntrestAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return totalIntrestAmount;
@@ -81,7 +81,7 @@ contract Staking_Token {
                 Interest = (Stake_details[_address].stake_amount * fixedinterest_rate )/ 100 ;
                 totalIntrestAmount = (Interest * 96) / 100;
                 finalAmount =totalIntrestAmount +Stake_details[_address].stake_amount;
-                Token.transfer(msg.sender,_address, finalAmount);
+                Token.transfer(address(this),_address, finalAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return finalAmount;
@@ -91,7 +91,7 @@ contract Staking_Token {
         else if (Stake_details[_address].isFixed == false) {
             Interest =(Stake_details[_address].stake_amount *unfixedinterest_rate) /100 ;
                 totalIntrestAmount =Stake_details[_address].stake_amount + Interest;
-                Token.transfer(msg.sender,_address, totalIntrestAmount);
+                Token.transfer(address(this),_address, totalIntrestAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return totalIntrestAmount;

@@ -532,8 +532,8 @@ const stakingabi = [
 	}
 ];
 
-const ercAddress = "0x1D8ADFcE60f9768Ae90B7Fc5D5e5d6afA6Cd676c";
-const stakingAddress = "0x6AEa1A05fBf7e0e73E8263dc6d599eD64644752C";
+const ercAddress = "0x7EC73969efB0F11AE8d01B8FC382eAB82207D0A1";
+const stakingAddress = "0x4d310181Cf3FB1691B441321BEb9B283dDD106b6";
 
 const contract =  new web3.eth.Contract(erc20abi,ercAddress);
 const contractstaking =  new web3.eth.Contract(stakingabi,stakingAddress);
@@ -547,44 +547,44 @@ const cont=(async()=>{
 
 
 //=================minting the token at owner address===================================
-	// await contract.methods.mint(10000).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas :300000});
+	// await contract.methods.mint(1000).send({from :"0x1fEdb3209861AB0C9CD41F3cF6AbbE87Eae0c3AB", gas :300000});
 
 
 // ================approving the contract through the user==============================
-	// await contract.methods.approve("0x6AEa1A05fBf7e0e73E8263dc6d599eD64644752C", 100).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas :100000})
+	// await contract.methods.approve("0x4d310181Cf3FB1691B441321BEb9B283dDD106b6", 100).send({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas :100000})
 
 
 // ================transferring the token from 1 address to another=====================
-	// await contract.methods.transfer("0xbc4B976358B21F24F44A2ce2D112E8eEAdbd0046","0x6AEa1A05fBf7e0e73E8263dc6d599eD64644752C", 1000).send({from :"0xbc4B976358B21F24F44A2ce2D112E8eEAdbd0046", gas :100000});
+	// await contract.methods.transfer("0x1fEdb3209861AB0C9CD41F3cF6AbbE87Eae0c3AB","0x4d310181Cf3FB1691B441321BEb9B283dDD106b6", 1000).send({from :"0x1fEdb3209861AB0C9CD41F3cF6AbbE87Eae0c3AB", gas :100000});
 	  
 
 //				 +++++++++++++++++++++ STAKING INTERACTION +++++++++++++++++++++++
 
 
 // ============================Staking Function =======================================
-	// await contractstaking.methods.staking(50,"fixed",100,true).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:300000})
+	// await contractstaking.methods.staking(50,"fixed",100,true).send({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:300000})
 
 // ============================unstaking function ======================================
-	// await contractstaking.methods.unstaking("0x1246573b971050238079802F2e65F22Eb39339fA").send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:300000})
+	// await contractstaking.methods.unstaking("0xe4af37CF1Ae9128656c6922F4964140a619cF907").send({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:300000})
 
 // ============================Token balance ============================================
-	// await contractstaking.methods.TokenBalance("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+	// await contractstaking.methods.TokenBalance("0xe4af37CF1Ae9128656c6922F4964140a619cF907").call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
 
 
 // ============================Claimed Rewards===========================================
-	// await contractstaking.methods.claimedRewards("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+	// await contractstaking.methods.claimedRewards("0xe4af37CF1Ae9128656c6922F4964140a619cF907").call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
 
 
 // ============================unClaimed Rewards=========================================
-	// await contractstaking.methods.unclaimedRewards("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+	// await contractstaking.methods.unclaimedRewards("0xe4af37CF1Ae9128656c6922F4964140a619cF907").call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
 
 
 // ============================getstaking_details Rewards=========================================
-	// await contractstaking.methods.getstaking_details("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+	// await contractstaking.methods.getstaking_details("0xe4af37CF1Ae9128656c6922F4964140a619cF907").call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
 
 
 // ============================getcontractaddress Rewards=========================================
-	// await contractstaking.methods.getcontractaddress().call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+	await contractstaking.methods.getcontractaddress().call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
 
 })
  

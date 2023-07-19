@@ -562,6 +562,7 @@ const cont=(async()=>{
 //				 +++++++++++++++++++++ STAKING INTERACTION +++++++++++++++++++++++
 
 
+// ============================Staking Function =======================================
 	// await contractstaking.methods.staking(50,"fixed",100,true).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:300000})
 
 // ============================unstaking function ======================================
@@ -569,7 +570,6 @@ const cont=(async()=>{
 
 // ============================Token balance ============================================
 	// await contractstaking.methods.TokenBalance("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
-
 
 
 // ============================Claimed Rewards===========================================

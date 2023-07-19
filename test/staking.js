@@ -196,8 +196,7 @@ it("Should unstaking the fixed after time stake ", async () => {
   const _amount = 100;
   const amount = 1000;
   const type = "fixed";
-  const duration =time.latest() + 100;
-  const convertduration = duration.toNumber()
+  const duration =100;
   const isFixed = true;
   const fixed_Interest = 6;
   await erc20.connect(owner).mint(amount);//for contract purpose
@@ -206,9 +205,9 @@ it("Should unstaking the fixed after time stake ", async () => {
   await erc20.connect(addr).approve(staking.address, _amount);
   await staking.connect(addr).staking(_amount, type, duration, isFixed);
   const stakingDetails = await staking.getstaking_details(addr.address);
-
+  
   expect(await stakingDetails.isFixed).to.be.true;
-  expect(await stakingDetails.stake_time).to.be.greaterThan(convertduration)
+  expect(await stakingDetails.stake_time).to.be.greaterThan(duration)
   expect( staking.connect(staking.address).unstaking(addr.address));
 });
 

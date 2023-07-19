@@ -17,8 +17,6 @@
     "hardhat": "^2.16.1"
   },
   "dependencies": {
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "web3": "^4.0.1"
-  },
-  "type": "module"
+  }
 }

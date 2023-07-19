@@ -2,7 +2,6 @@
 pragma solidity ^0.8.10;
 
 import "./ERC-20.sol";
-// import "hardhat/console.sol";
 
 contract Staking_Token {
     ERC20Basic Token;
@@ -23,7 +22,7 @@ contract Staking_Token {
 
     address mapping_address;
     uint256 expirytime_forfixedstaking = block.timestamp + 300;
-    uint256 penality_stake = 4; // percent 4%
+    uint256 penality_stake = 4; 
     uint256 fixedinterest_rate = 6;
     uint256 unfixedinterest_rate = 2;
     uint256 stake_reward;
@@ -32,13 +31,13 @@ contract Staking_Token {
     uint256 finalAmount;
 
     mapping(address => Stake) public Stake_details;
-    // mapping(address => uint256) public balances;
 
     event tokensStaked(address from, uint256 amount, uint256 _duration);
 
 
     function staking(uint256 _amount,string memory _type,uint256 _duration, bool _isFixed) public {
         require(Token.balanceOf(msg.sender) >= _amount, "Insufficient Balance");
+        //fixed staking
         if ( keccak256(abi.encodePacked(_type)) == keccak256(abi.encodePacked("fixed")) ) {
             require( _amount > 0," Stake can not be 0 , Enter some amount of tokens");
             Stake_details[msg.sender].stake_amount = _amount;
@@ -51,6 +50,7 @@ contract Staking_Token {
             Token.transfer( msg.sender,address(this), _amount);
             emit tokensStaked(msg.sender, _amount, block.timestamp);
         } 
+        //unfixed staking 
         else if (keccak256(abi.encodePacked(_type)) == keccak256(abi.encodePacked("unfixed")) ) {
             Stake_details[msg.sender].stake_amount = _amount;
             Stake_details[msg.sender].stake_type = _type;
@@ -64,16 +64,11 @@ contract Staking_Token {
     }
 
     function unstaking(address _address) public returns (uint256) {
-        // console.log("hello");
         require(msg.sender == Stake_details[_address].owner,"Stake has not been initiated");
         if (Stake_details[_address].isFixed == true) {
-            // require(Stake_details[_address].stake_time > expirytime_forfixedstaking );
             if (block.timestamp > Stake_details[msg.sender].stake_time ) {
-                // console.log("inside the fixed stake after complete time");
-                // uint256 fixed_time_after=  expirytime_forfixedstaking - Stake_details[_address].starting_stake_time ;
                 Interest =(Stake_details[_address].stake_amount *fixedinterest_rate ) /100;
                 totalIntrestAmount =Stake_details[_address].stake_amount + Interest;
-                // console.log(totalIntrestAmount);
                 Token.transfer(msg.sender,_address, totalIntrestAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
@@ -82,27 +77,20 @@ contract Staking_Token {
 
             //unstaked before fixed time so the penality will be taken
             else if (block.timestamp < Stake_details[msg.sender].stake_time) {
-                // console.log("inside the fixed stake before complete time and got penality");
-                // uint256 fixed_time_before=block.timestamp - Stake_details[_address].starting_stake_time;
                 require( block.timestamp <  expirytime_forfixedstaking,"" );
                 Interest = (Stake_details[_address].stake_amount * fixedinterest_rate )/ 100 ;
-                // console.log(Interest);
                 totalIntrestAmount = (Interest * 96) / 100;
-                // console.log(totalIntrestAmount);
                 finalAmount =totalIntrestAmount +Stake_details[_address].stake_amount;
-                // console.log(finalAmount);
                 Token.transfer(msg.sender,_address, finalAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;
                 return finalAmount;
             }
         } 
+        // Unfixed staking loop
         else if (Stake_details[_address].isFixed == false) {
-            // console.log("not fixed loop");
             Interest =(Stake_details[_address].stake_amount *unfixedinterest_rate) /100 ;
-                // console.log(Interest);
                 totalIntrestAmount =Stake_details[_address].stake_amount + Interest;
-                // console.log(totalIntrestAmount);
                 Token.transfer(msg.sender,_address, totalIntrestAmount);
                 delete Stake_details[_address];
                 Stake_details[msg.sender].isClaimed =true;

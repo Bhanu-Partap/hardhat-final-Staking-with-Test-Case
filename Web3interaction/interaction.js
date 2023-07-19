@@ -1,5 +1,4 @@
-// import {Erc20abi} from "./ERC20.json" assert{type:"json"};
-// import {Stakingabi} from "./staking.json" assert{type:"json"};
+//++++++++++++++++=========== IF YOU WANT TO RUN THIS FILE THEN FIRST EDIT THE PACKAGE.JSON FILE AND WRITE AFTER DEPENDENCIES {, "type" : "module"} =============+++++++++++++++++++++//
 
 
 // const Web3 = require("web3")
@@ -577,9 +576,15 @@ const cont=(async()=>{
 
 
 // ============================unClaimed Rewards=========================================
-	// await contractstaking.methods. unclaimedRewards("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+	// await contractstaking.methods.unclaimedRewards("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
 
 
+// ============================getstaking_details Rewards=========================================
+	// await contractstaking.methods.getstaking_details("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+
+
+// ============================getcontractaddress Rewards=========================================
+	// await contractstaking.methods.getcontractaddress().call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
 
 })
  

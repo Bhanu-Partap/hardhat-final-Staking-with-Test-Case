@@ -224,7 +224,11 @@ it("Should unstaking the fixed before time stake ", async () => {
   const stakingDetails = await staking.getstaking_details(addr.address);
 
   expect(await stakingDetails.isFixed).to.be.true;
-  expect(await stakingDetails.stake_time).to.be.below(duration)
+  
+  const currentTime = Math.floor(Date.now() / 1000);
+  const elapsedTime = currentTime - stakingDetails.stake_time.toNumber();
+
+  expect(elapsedTime).to.be.lessThan(duration)
   expect( staking.connect(staking.address).unstaking(addr.address));
 });
 

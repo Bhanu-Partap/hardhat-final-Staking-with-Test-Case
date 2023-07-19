@@ -276,6 +276,34 @@ const stakingabi = [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_type",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_duration",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isFixed",
+				"type": "bool"
+			}
+		],
+		"name": "staking",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "contract ERC20Basic",
 				"name": "_addressERC20",
 				"type": "address"
@@ -313,60 +341,11 @@ const stakingabi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "Stake_details",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "stake_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "stake_type",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "stake_time",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "starting_stake_time",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "isFixed",
-				"type": "bool"
-			},
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "isClaimed",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "_address",
 				"type": "address"
 			}
 		],
-		"name": "TokenBalance",
+		"name": "unstaking",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -374,7 +353,7 @@ const stakingabi = [
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -468,29 +447,69 @@ const stakingabi = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "Stake_details",
+		"outputs": [
+			{
 				"internalType": "uint256",
-				"name": "_amount",
+				"name": "stake_amount",
 				"type": "uint256"
 			},
 			{
 				"internalType": "string",
-				"name": "_type",
+				"name": "stake_type",
 				"type": "string"
 			},
 			{
 				"internalType": "uint256",
-				"name": "_duration",
+				"name": "stake_time",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "starting_stake_time",
 				"type": "uint256"
 			},
 			{
 				"internalType": "bool",
-				"name": "_isFixed",
+				"name": "isFixed",
+				"type": "bool"
+			},
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "isClaimed",
 				"type": "bool"
 			}
 		],
-		"name": "staking",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "TokenBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -511,44 +530,46 @@ const stakingabi = [
 		],
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "unstaking",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	}
 ];
 
-const ercAddress = "0xF046297d212B49Eb7F234D13A901af37361c59B2";
-const stakingAddress = "0x8eBE195c1C979d8b0D8cfd3cD5BFeC9EA171a9b8";
+const ercAddress = "0x1D8ADFcE60f9768Ae90B7Fc5D5e5d6afA6Cd676c";
+const stakingAddress = "0x6AEa1A05fBf7e0e73E8263dc6d599eD64644752C";
 
 const contract =  new web3.eth.Contract(erc20abi,ercAddress);
+const contractstaking =  new web3.eth.Contract(stakingabi,stakingAddress);
 
 
 //ERC - 20 Functions calling 
 
 const cont=(async()=>{
-//==============minting the token at owner address=======================
-	// await contract.methods.mint(100).send({from :"0xe8A6ca20c6578426e836d471c0Cf63f68b62736d", gas :300000});
+
+//	++++++++++++++++ERC INTERACTION++++++++++++++++
+
+
+//=================minting the token at owner address===================================
+	// await contract.methods.mint(10000).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas :300000});
+
+
+// ================approving the contract through the user==============================
+	// await contract.methods.approve("0x6AEa1A05fBf7e0e73E8263dc6d599eD64644752C", 100).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas :100000})
+
 
 // ================transferring the token from 1 address to another=====================
-	await contract.methods.mint(100).send({from :"0xe8A6ca20c6578426e836d471c0Cf63f68b62736d", gas :300000});
-	  // contract.methods.approve("0x20775d300BdE943Ac260995E977fb915fB01f399", 100).send({from :"0x20775d300BdE943Ac260995E977fb915fB01f399", gas :100000})
-  
+	// await contract.methods.transfer("0xbc4B976358B21F24F44A2ce2D112E8eEAdbd0046","0x6AEa1A05fBf7e0e73E8263dc6d599eD64644752C", 1000).send({from :"0xbc4B976358B21F24F44A2ce2D112E8eEAdbd0046", gas :100000});
+	  
+
+// ++++++++++++++++++++++++++++++++++ STAKING INTERACTION ++++++++++++++++++++++++++++++++++++++++++
+	// await contractstaking.methods.staking(50,"fixed",100,true).send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:300000})
+
+// ============================unstaking function ===================================
+	// await contractstaking.methods.unstaking("0x1246573b971050238079802F2e65F22Eb39339fA").send({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:300000})
+
+// ============================Token balance ===================================
+	await contractstaking.methods.TokenBalance("0x1246573b971050238079802F2e65F22Eb39339fA").call({from :"0x1246573b971050238079802F2e65F22Eb39339fA", gas:100000}).then(console.log)
+
+
+
 })
  
 cont()

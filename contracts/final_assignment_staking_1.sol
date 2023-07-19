@@ -65,7 +65,7 @@ contract Staking_Token {
 
     function unstaking(address _address) public returns (uint256) {
         // console.log("hello");
-        require(msg.sender == Stake_details[msg.sender].owner,"Stake has not been initiated");
+        require(msg.sender == Stake_details[_address].owner,"Stake has not been initiated");
         if (Stake_details[_address].isFixed == true) {
             // require(Stake_details[_address].stake_time > expirytime_forfixedstaking );
             if (block.timestamp > Stake_details[msg.sender].stake_time ) {

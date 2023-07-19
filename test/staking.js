@@ -172,11 +172,30 @@ describe("Staking Test Cases", async () => {
 
 
 
-it("Should unstaking the stake ", async () => {
+it("Should unstaking the unfixedstake ", async () => {
+  const _amount = 100;
+  const amount = 1000;
+  const type = "unfixed";
+  const duration = 0;
+  const isFixed = false;
+  await erc20.connect(owner).mint(amount);//for contract purpose
+  await erc20.connect(owner).transfer(owner.address,staking.address, amount);
+  await erc20.connect(addr).mint(amount);
+  await erc20.connect(addr).approve(staking.address, _amount);
+  await staking.connect(addr).staking(_amount, type, duration, isFixed);
+  const stakingDetails = await staking.getstaking_details(addr.address);
+
+  expect(await stakingDetails.isFixed).to.be.false;
+  expect( staking.connect(staking.address).unstaking(addr.address));
+});
+
+
+
+it("Should unstaking the fixed after time stake ", async () => {
   const _amount = 100;
   const amount = 1000;
   const type = "fixed";
-  const duration = 10;
+  const duration = 100;
   const isFixed = true;
   await erc20.connect(owner).mint(amount);//for contract purpose
   await erc20.connect(owner).transfer(owner.address,staking.address, amount);
@@ -188,6 +207,11 @@ it("Should unstaking the stake ", async () => {
   expect(await stakingDetails.isFixed).to.be.true;
   expect( staking.connect(staking.address).unstaking(addr.address));
 });
+
+
+
+
+
 });
 
 

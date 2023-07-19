@@ -1,5 +1,4 @@
 const { expect } = require("chai");
-const { time } = require('@nomicfoundation/hardhat-network-helpers');
 
 
 describe("Staking Test Cases", async () => {
@@ -225,7 +224,7 @@ it("Should unstaking the fixed before time stake ", async () => {
   const stakingDetails = await staking.getstaking_details(addr.address);
 
   expect(await stakingDetails.isFixed).to.be.true;
-  expect(await stakingDetails.stake_time).to.be.lessThanOrEqual(duration)
+  expect(await stakingDetails.stake_time).to.be.below(duration)
   expect( staking.connect(staking.address).unstaking(addr.address));
 });
 

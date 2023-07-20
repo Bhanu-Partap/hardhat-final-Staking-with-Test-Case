@@ -1,4 +1,4 @@
-//++++++++++++++++=========== IF YOU WANT TO RUN THIS FILE THEN FIRST EDIT THE PACKAGE.JSON FILE AND WRITE AFTER DEPENDENCIES {, "type" : "module"} =============+++++++++++++++++++++//
+//++++++++++++++++=========== IF YOU WANT TO RUN THIS FILE THEN FIRST EDIT THE PACKAGE.JSON FILE AND WRITE AFTER DEPENDENCIES {, "type" : "module"} AND UNCOMMENT ONE BY ONE ACCORDING TO YOUR NEED =============+++++++++++++++++++++//
 
 
 // const Web3 = require("web3")
@@ -584,7 +584,7 @@ const cont=(async()=>{
 
 
 // ============================getcontractaddress Rewards=========================================
-	await contractstaking.methods.getcontractaddress().call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
+	// await contractstaking.methods.getcontractaddress().call({from :"0xe4af37CF1Ae9128656c6922F4964140a619cF907", gas:100000}).then(console.log)
 
 })
  

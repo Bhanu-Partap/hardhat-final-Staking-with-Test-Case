@@ -222,9 +222,8 @@ it("Should unstaking the fixed before time stake ", async () => {
   await erc20.connect(addr).approve(staking.address, _amount);
   await staking.connect(addr).staking(_amount, type, duration, isFixed);
   const stakingDetails = await staking.getstaking_details(addr.address);
-
   expect(await stakingDetails.isFixed).to.be.true;
-  
+
   const currentTime = Math.floor(Date.now() / 1000);
   const elapsedTime = currentTime - stakingDetails.stake_time.toNumber();
 

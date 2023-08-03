@@ -229,6 +229,7 @@ it("Should unstaking the fixed before time stake ", async () => {
 
   expect(elapsedTime).to.be.lessThan(duration)
   expect( staking.connect(staking.address).unstaking(addr.address));
+  expect( staking.connect(staking.address).unstaking(addr.address));
 });
 
 });
